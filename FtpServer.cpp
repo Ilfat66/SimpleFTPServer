@@ -658,11 +658,11 @@ bool FtpServer::processCommand()
   else if( CommandIs( "MLST" ))
   {
     char path[ FTP_CWD_SIZE ];
-    uint16_t dat, tim;
+    uint16_t dat=0, tim=0;
     char dtStr[ 15 ];
     bool isdir;
     if( haveParameter() && makeExistsPath( path )){
-      if( ! getFileModTime( path, & dat, & tim )) {
+      if( ! getFileModTime( path, &dat, &tim )) {
         client.print( F("550 Unable to retrieve time for ") ); client.println( parameter );
       } else
       {
@@ -933,9 +933,9 @@ bool FtpServer::processCommand()
         }
         else if( mdtm ) // get file modification time
         {
-          uint16_t dat, tim;
+          uint16_t dat=0, tim=0;
           char dtStr[ 15 ];
-          if( getFileModTime( path, & dat, & tim )) {
+          if( getFileModTime( path, &dat, &tim )) {
             client.print( F("213 ") ); client.println( makeDateTimeStr( dtStr, dat, tim ) );
           } else {
             client.println("550 Unable to retrieve time" );
